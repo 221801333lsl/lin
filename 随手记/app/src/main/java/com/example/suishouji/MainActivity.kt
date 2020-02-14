@@ -108,6 +108,14 @@ class MainActivity: AppCompatActivity(){
         var adapter:NoteAdapter=NoteAdapter(this,lists)
         adapter.setOnItemClickListener(object:NoteAdapter.OnItemClickListener{
             override fun onItemClick(view: View, position: Int):Boolean {
+                var intent=Intent()
+                var bundle=Bundle()
+                intent.setClass(cxt,ReviseActivity::class.java)
+                bundle.putCharSequence("toresivetitle",adapter.Notebeans[position].title)
+                bundle.putCharSequence("toresivetime", adapter.Notebeans[position].time)
+                bundle.putCharSequence("toresivecontent",adapter.Notebeans[position].content)
+                intent.putExtras(bundle)
+                startActivity(intent)
                 return true
             }
         })
