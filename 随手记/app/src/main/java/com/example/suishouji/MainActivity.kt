@@ -150,6 +150,20 @@ class MainActivity: AppCompatActivity(){
                 alertDialog.setButton(
                     DialogInterface.BUTTON_POSITIVE,"提醒",
                     DialogInterface.OnClickListener { dialog, which ->
+                        var intent3=Intent()
+                        intent3.setClass(cxt,TimechooseActivity::class.java)
+                        var bundle3=Bundle()
+                        var content:String
+                        var getcontent:String=adapter.Notebeans[position].content.toString()
+                        if (getcontent.length > 32) {
+                            content = getcontent.substring(0, 32) + "..."
+                        } else {
+                            content = getcontent
+                        }
+                        bundle3.putString("tosettitle",adapter.Notebeans[position].title.toString())
+                        bundle3.putString("tosetcontent",content)
+                        intent3.putExtras(bundle3)
+                        startActivity(intent3)
                     })
                 alertDialog.show()
                 return true
