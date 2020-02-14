@@ -106,22 +106,29 @@ class MainActivity: AppCompatActivity(){
             }
         }
         var adapter:NoteAdapter=NoteAdapter(this,lists)
+        adapter.setOnItemClickListener(object:NoteAdapter.OnItemClickListener{
+            override fun onItemClick(view: View, position: Int):Boolean {
+                return true
+            }
+        })
+        adapter.setOnLongClickListener(object:NoteAdapter.OnLongClickListener{
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onLongClick(view: View, position: Int):Boolean {
+                var aweq:String="3"
+                var alertDialog: AlertDialog = AlertDialog.Builder(cxt).create()
+                alertDialog.setMessage("您需要的操作是：")
+                alertDialog.setButton(
+                    DialogInterface.BUTTON_NEGATIVE,"删除",
+                    DialogInterface.OnClickListener { dialog, which ->
+                    })
+                alertDialog.setButton(
+                    DialogInterface.BUTTON_POSITIVE,"提醒",
+                    DialogInterface.OnClickListener { dialog, which ->
+                    })
+                alertDialog.show()
+                return true
+            }
+        })
         ssjrecycleview.setAdapter(adapter)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
