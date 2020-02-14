@@ -46,6 +46,26 @@ class MainActivity: AppCompatActivity(){
             intent2.setClass(this,RecyclebinActivity::class.java)
             startActivity(intent2)
         }
+        edittext.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP ) {
+                //查询
+                var key:String=edittext.text.toString()
+                val p: Pattern = Pattern.compile("\\s*|\t|\r|\n")
+                val m: Matcher = p.matcher(key)
+                key = m.replaceAll("")
+                var intent=Intent()
+                var bundle=Bundle()
+                intent.setClass(this,ReatchActivity::class.java)
+                if(key!=null){
+                    bundle.putCharSequence("key",key)
+                    intent.putExtras(bundle)
+                    startActivity(intent)
+                }
+                edittext.setText(null)
+                return@OnKeyListener true
+            }
+            false
+        })
         init(this)
     }
 
