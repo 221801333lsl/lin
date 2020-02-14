@@ -25,8 +25,7 @@ class RecyclebinActivity: AppCompatActivity(){
         db?.createTable("rb",true,
             "title" to TEXT,
             "time" to TEXT,
-            "content" to TEXT,
-            "location" to TEXT
+            "content" to TEXT
         )
     }
 }
