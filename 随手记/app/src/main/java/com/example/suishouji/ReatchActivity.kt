@@ -1,14 +1,27 @@
 package com.example.suishouji
 
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.os.FileObserver.DELETE
+import android.provider.Contacts.SettingsColumns.KEY
+import android.text.TextWatcher
+import android.view.KeyEvent
+import android.view.View
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.mainactivity.*
 import kotlinx.android.synthetic.main.reatchactivity.*
+import kotlinx.android.synthetic.main.resiveactivity.*
 import org.jetbrains.anko.db.TEXT
 import org.jetbrains.anko.db.createTable
 import org.jetbrains.anko.db.dropTable
@@ -97,6 +110,19 @@ class ReatchActivity: AppCompatActivity(){
             }
         }
         var adapter:NoteAdapter=NoteAdapter(this,lists)
+        adapter.setOnItemClickListener(object:NoteAdapter.OnItemClickListener{
+            override fun onItemClick(view: View, position: Int):Boolean {
+                var intent=Intent()
+                var bundle=Bundle()
+                intent.setClass(cxt,SavedActivity::class.java)
+                bundle.putCharSequence("tosavedtitle",adapter.Notebeans[position].title)
+                bundle.putCharSequence("tosavedtime", adapter.Notebeans[position].time)
+                bundle.putCharSequence("tosavedcontent",adapter.Notebeans[position].content)
+                intent.putExtras(bundle)
+                startActivity(intent)
+                return true
+            }
+        })
         cxrecycleview.setAdapter(adapter)
     }
 }
