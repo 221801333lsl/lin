@@ -14,7 +14,7 @@ class SavedActivity : Activity() {
         var time: TextView =findViewById(R.id.savedtime)
         var title: TextView =findViewById(R.id.savedtitle)
         var content: TextView =findViewById(R.id.savedcontent)
-        
+
         title.setText(bundle?.getString("tosavedtitle"))
         time.setText(bundle?.getString("tosavedtime"))
         content.setText(bundle?.getString("tosavedcontent"))

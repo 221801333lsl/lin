@@ -128,6 +128,24 @@ class MainActivity: AppCompatActivity(){
                 alertDialog.setButton(
                     DialogInterface.BUTTON_NEGATIVE,"删除",
                     DialogInterface.OnClickListener { dialog, which ->
+                        database.use {
+                            insert(
+                                "rb",
+                                "title" to adapter.Notebeans[position].title.toString(),
+                                "time" to adapter.Notebeans[position].time.toString(),
+                                "content" to adapter.Notebeans[position].content.toString()
+                            )
+                        }
+                        var intentd=Intent()
+                        intentd.setClass(cxt,RecyclebinActivity::class.java)
+                        startActivity(intentd)
+                        if(adapter.Notebeans[position].time !=null){
+                            aweq= adapter.Notebeans[position].time.toString()
+                        }
+                        var delectarray:Array<String>
+                        delectarray= arrayOf(aweq)
+                        database.use { delete("ssj", "time" + " = ?",delectarray) }
+                        Toast.makeText(cxt,"删除成功", Toast.LENGTH_SHORT).show()
                     })
                 alertDialog.setButton(
                     DialogInterface.BUTTON_POSITIVE,"提醒",
@@ -140,3 +158,19 @@ class MainActivity: AppCompatActivity(){
         ssjrecycleview.setAdapter(adapter)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
