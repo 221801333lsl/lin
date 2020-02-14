@@ -40,6 +40,16 @@ class NewActivity: Activity() {
         var date: Date = Date(System.currentTimeMillis())
         time.setText(gettime.format(date))
 
+        //获取位置信息
+        var location=getLocation(this)
+        var longitude:String="2"
+        var latitude:String="2"
+        if(location!=null)
+        {
+            longitude=location.longitude.toString()
+            latitude=location.latitude.toString()
+        }
+
         //保存或退出
         var imageButton1: ImageButton =findViewById(R.id.cancel)
         var imageButton2: ImageButton =findViewById(R.id.save)
@@ -66,5 +76,19 @@ class NewActivity: Activity() {
             Toast.makeText(this,"保存成功",Toast.LENGTH_SHORT).show()
             finish()
         }
+    }
+    @SuppressLint("MissingPermission")
+    private fun getLocation(context: Context): Location? {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val checkCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val checkCallPhonePermission =ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED || checkCameraPermission != PackageManager.PERMISSION_GRANTED) {
+            return null
+        }
+        val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (location == null) {
+            locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        }
+        return location
     }
 }
