@@ -26,8 +26,7 @@ class SSJOpenHelper(ctx: Context) :ManagedSQLiteOpenHelper(ctx, "MyDatabase", nu
         db?.createTable("ssj",true,
             "title" to TEXT,
             "time" to TEXT,
-            "content" to TEXT,
-            "location" to TEXT)
+            "content" to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {

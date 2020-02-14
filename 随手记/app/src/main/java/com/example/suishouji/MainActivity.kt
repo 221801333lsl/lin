@@ -20,6 +20,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.mainactivity.*
 import kotlinx.android.synthetic.main.newactivity.*
+import org.jetbrains.anko.db.TEXT
+import org.jetbrains.anko.db.createTable
+import org.jetbrains.anko.db.dropTable
+import org.jetbrains.anko.db.insert
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -54,7 +58,50 @@ class MainActivity: AppCompatActivity(){
     private fun init(cxt:Context){
         ssjrecycleview.layoutManager= LinearLayoutManager(this)
         var lists=ArrayList<Noteitem>()
+        var myDatabaseHelper:SSJOpenHelper =SSJOpenHelper(this);
+        var db:SQLiteDatabase=myDatabaseHelper.getWritableDatabase();
+        var columns:Array<String>
+        columns= arrayOf("title","time","content")
+        var cursor: Cursor? = db.query("ssj",
+            columns,null,null,null,null,"time desc")
+        if (cursor != null) {
+            if(cursor.moveToNext()) {
+                do {
+                    var gettitle:String=cursor.getString(cursor.getColumnIndex("title"));
+                    var gettime:String=cursor.getString(cursor.getColumnIndex("time"));
+                    var getcontent:String=cursor.getString(cursor.getColumnIndex("content"));
+                    var bean = Noteitem()
+                    with(bean)
+                    {
+                        title = gettitle
+                        time = gettime
+                        if (getcontent.length > 32) {
+                            content = getcontent.substring(0, 32) + "..."
+                        } else {
+                            content = getcontent
+                        }
+                    }
+                    lists.add(bean)
+                }while (cursor.moveToNext());
+            }
+        }
         var adapter:NoteAdapter=NoteAdapter(this,lists)
         ssjrecycleview.setAdapter(adapter)
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

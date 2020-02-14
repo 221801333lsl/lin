@@ -1,22 +1,44 @@
 package com.example.suishouji
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.icu.text.SimpleDateFormat
+import android.location.Location
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.db.insert
+import java.util.*
+import android.location.LocationListener as LocationListener1
 
 class NewActivity: Activity() {
+    @RequiresApi(Build.VERSION_CODES.N)
+    @SuppressLint("WrongViewCast", "MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.newactivity)
         var time:TextView=findViewById(R.id.time)
         var title:EditText=findViewById(R.id.title)
         var content:EditText=findViewById(R.id.content)
-        var location1:TextView=findViewById(R.id.location)
+
+        //获得当前时间
+        var gettime= SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
+        var date: Date = Date(System.currentTimeMillis())
+        time.setText(gettime.format(date))
 
         //保存或退出
         var imageButton1: ImageButton =findViewById(R.id.cancel)
@@ -34,6 +56,13 @@ class NewActivity: Activity() {
             alertDialog.show()
         }
         imageButton2.setOnClickListener {
+            database.use{
+                insert("ssj",
+                    "title" to title.text.toString(),
+                    "time" to time.text.toString(),
+                    "content" to content.text.toString()
+                )
+            }
             Toast.makeText(this,"保存成功",Toast.LENGTH_SHORT).show()
             finish()
         }
