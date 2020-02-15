@@ -24,7 +24,9 @@
     </androidx.core.widget.NestedScrollView>
     <TextView
         android:id="@+id/cancelset"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_height="50dp"
@@ -34,7 +36,9 @@
         android:background="#F0F0F0"></TextView>
     <TextView
         android:id="@+id/settime"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_height="50dp"

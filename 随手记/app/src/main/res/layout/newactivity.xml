@@ -2,22 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="#f0f0f0">
         <ImageButton
             android:id="@+id/cancel"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:paddingTop="5dp"
+            android:layout_alignParentLeft="true"
             android:paddingHorizontal="0dp"
             android:paddingBottom="0dp"
             android:layout_margin="0dp"
             android:src="@mipmap/quxiao"></ImageButton>
         <TextView
-            android:layout_width="328dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
             android:text="编辑"
@@ -25,14 +26,15 @@
             android:textSize="20dp"></TextView>
         <ImageButton
             android:id="@+id/save"
-            android:layout_width="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:paddingTop="5dp"
             android:paddingHorizontal="0dp"
             android:paddingBottom="0dp"
             android:layout_margin="0dp"
             android:src="@mipmap/baocun"></ImageButton>
-    ></LinearLayout>
+    ></RelativeLayout>
     <TextView
         android:id="@+id/time"
         android:layout_width="match_parent"
@@ -61,7 +63,7 @@
             android:id="@+id/title"
             android:singleLine="true"
             android:layout_width="0dp"
-            android:layout_weight="7"
+            android:layout_weight="5"
             android:layout_height="30dp"
             android:padding="0dp"
             android:maxLength="15"

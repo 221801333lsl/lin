@@ -9,7 +9,7 @@
         android:layout_marginVertical="0dp"
         android:id="@+id/line0"
         android:orientation="vertical">
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -22,13 +22,13 @@
                 android:paddingBottom="0dp"
                 android:src="@mipmap/huishouzhan"></ImageButton>
             <TextView
-                android:layout_width="334dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:text="随手记"
                 android:textColor="#050505"
                 android:textSize="20dp"></TextView>
-            ></LinearLayout>
+            ></RelativeLayout>
         <EditText
             android:id="@+id/search"
             android:layout_width="match_parent"

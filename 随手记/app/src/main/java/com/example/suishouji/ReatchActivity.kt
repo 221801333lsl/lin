@@ -82,6 +82,13 @@ class ReatchActivity: AppCompatActivity(){
         init(this)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        var myDatabaseHelper:SSJOpenHelper =SSJOpenHelper(this);
+        var db:SQLiteDatabase=myDatabaseHelper.getWritableDatabase();
+        db?.dropTable("rt", true)
+    }
+
     private fun init(cxt:Context){
         cxrecycleview.layoutManager= LinearLayoutManager(this)
         var lists=ArrayList<Noteitem>()
