@@ -2,6 +2,7 @@ package com.example.suishouji
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -34,7 +35,7 @@ class NewActivity: Activity() {
         var time:TextView=findViewById(R.id.time)
         var title:EditText=findViewById(R.id.title)
         var content:EditText=findViewById(R.id.content)
-        var location1:TextView=findViewById(R.id.location)
+        var location1:TextView=findViewById(R.id.newlocation)
 
         //获得当前时间
         var gettime= SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
@@ -42,9 +43,10 @@ class NewActivity: Activity() {
         time.setText(gettime.format(date))
 
         //获取位置信息
+
         var location=getLocation(this)
-        var longitude:String="2"
-        var latitude:String="2"
+        var longitude:String=" "
+        var latitude:String=" "
         if(location!=null)
         {
             longitude=location.longitude.toString()
@@ -80,17 +82,55 @@ class NewActivity: Activity() {
             finish()
         }
     }
+    @SuppressLint("NewApi")
+    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun getLocation(context: Context): Location? {
+        //如果手机的SDK版本使用新的权限模型，检查是否获得了位置权限，如果没有就申请位置权限，如果有权限就刷新位置
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val checkCameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         val checkCallPhonePermission =ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
         if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED || checkCameraPermission != PackageManager.PERMISSION_GRANTED) {
-            return null
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION)
+            }
         }
-        val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        var location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         if (location == null) {
             locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                this.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED
+        }
+        else if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+        }
+        else {
+            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            if (location == null) {
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            }
+        }
         return location
+    }
+
+    //定义一个权限COde，用来识别Location权限
+    private val LOCATION_PERMISSION = 1
+
+    //使用匿名内部类创建了LocationListener的实例
+    val locationListener = object : android.location.LocationListener {
+        override fun onProviderDisabled(provider: String?) {
+        }
+
+        override fun onProviderEnabled(provider: String?) {
+        }
+
+        override fun onLocationChanged(location: Location?) {
+        }
+
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
     }
 }

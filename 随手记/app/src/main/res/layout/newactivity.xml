@@ -40,7 +40,7 @@
         android:textSize="15dp"
         android:textColor="#C2C1C1"></TextView>
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/newlocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="15dp"

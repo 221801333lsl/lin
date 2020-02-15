@@ -53,16 +53,15 @@ class MainActivity: AppCompatActivity(){
                 val p: Pattern = Pattern.compile("\\s*|\t|\r|\n")
                 val m: Matcher = p.matcher(key)
                 key = m.replaceAll("")
-                var intent=Intent()
-                var bundle=Bundle()
-                intent.setClass(this,ReatchActivity::class.java)
                 if(key!=null){
+                    var intent=Intent()
+                    var bundle=Bundle()
+                    intent.setClass(this,ReatchActivity::class.java)
                     bundle.putCharSequence("key",key)
                     intent.putExtras(bundle)
                     startActivity(intent)
                 }
                 edittext.setText(null)
-                return@OnKeyListener true
             }
             false
         })
