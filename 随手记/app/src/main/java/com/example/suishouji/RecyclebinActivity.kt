@@ -101,14 +101,6 @@ class RecyclebinActivity: AppCompatActivity(){
             alertDialog.show()
         }
 
-        var myDatabaseHelper:SSJOpenHelper =SSJOpenHelper(this)
-        var db:SQLiteDatabase=myDatabaseHelper.getWritableDatabase()
-        db?.createTable("rb",true,
-            "title" to TEXT,
-            "time" to TEXT,
-            "content" to TEXT,
-            "location" to TEXT
-        )
         var imageButton1: ImageButton=findViewById(com.example.suishouji.R.id.backbutton)
         imageButton1.setOnClickListener {
             finish()
@@ -230,8 +222,8 @@ class RecyclebinActivity: AppCompatActivity(){
                         delectarray= arrayOf(aweq)
                         database.use { delete("rb", "title" + " = ?",delectarray) }
                         Toast.makeText(this,"还原成功", Toast.LENGTH_SHORT).show()
-                        onResume()
                     }
+                    onResume()
                 })
             alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"取消",
                 DialogInterface.OnClickListener { dialog, which ->

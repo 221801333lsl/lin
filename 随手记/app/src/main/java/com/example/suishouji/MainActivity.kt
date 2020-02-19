@@ -130,6 +130,14 @@ class MainActivity: AppCompatActivity(){
                 alertDialog.setButton(
                     DialogInterface.BUTTON_NEGATIVE,"删除",
                     DialogInterface.OnClickListener { dialog, which ->
+                        var myDatabaseHelper:SSJOpenHelper =SSJOpenHelper(cxt)
+                        var db:SQLiteDatabase=myDatabaseHelper.getWritableDatabase()
+                        db?.createTable("rb",true,
+                            "title" to TEXT,
+                            "time" to TEXT,
+                            "content" to TEXT,
+                            "location" to TEXT
+                        )
                         database.use {
                             insert(
                                 "rb",
