@@ -110,11 +110,7 @@ class ReatchActivity: AppCompatActivity(){
                     {
                         title = gettitle
                         time = gettime
-                        if (getcontent.length > 32) {
-                            content = getcontent.substring(0, 32) + "..."
-                        } else {
-                            content = getcontent
-                        }
+                        content = getcontent
                         location=getlocation
                     }
                     lists.add(bean)

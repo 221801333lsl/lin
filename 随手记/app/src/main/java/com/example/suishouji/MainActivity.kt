@@ -44,6 +44,14 @@ class MainActivity: AppCompatActivity(){
         imageButton2.setOnClickListener {
             var intent2=Intent()
             intent2.setClass(this,RecyclebinActivity::class.java)
+            var myDatabaseHelper:SSJOpenHelper =SSJOpenHelper(this)
+            var db:SQLiteDatabase=myDatabaseHelper.getWritableDatabase()
+            db?.createTable("rb",true,
+                "title" to TEXT,
+                "time" to TEXT,
+                "content" to TEXT,
+                "location" to TEXT
+            )
             startActivity(intent2)
         }
         edittext.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
@@ -95,11 +103,7 @@ class MainActivity: AppCompatActivity(){
                     {
                         title = gettitle
                         time = gettime
-                        if (getcontent.length > 32) {
-                            content = getcontent.substring(0, 32) + "..."
-                        } else {
-                            content = getcontent
-                        }
+                        content = getcontent
                         location=getlocation
                     }
                     lists.add(bean)
